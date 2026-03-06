@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: biometric_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: biometric_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-biometric_secure_password}
+      POSTGRES_DB: biometric_attendance
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U biometric_user -d biometric_attendance"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - biometric_network
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: biometric_backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+asyncpg://biometric_user:${DB_PASSWORD:-biometric_secure_password}@db:5432/biometric_attendance
+      SECRET_KEY: ${SECRET_KEY:-change-this-super-secret-key-in-production}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:-generate-fernet-key-for-production}
+      FACE_MATCH_THRESHOLD: ${FACE_MATCH_THRESHOLD:-0.60}
+      FINGERPRINT_MATCH_THRESHOLD: ${FINGERPRINT_MATCH_THRESHOLD:-70}
+      LIVENESS_THRESHOLD: ${LIVENESS_THRESHOLD:-0.70}
+      ATTENDANCE_COOLDOWN_MINUTES: ${ATTENDANCE_COOLDOWN_MINUTES:-5}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - biometric_network
+
+  # React Frontend (Production Build)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: biometric_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - biometric_network
+
+  # Nginx Reverse Proxy (Optional - for production)
+  nginx:
+    image: nginx:alpine
+    container_name: biometric_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - biometric_network
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  biometric_network:
+    driver: bridge

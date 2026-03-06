@@ -1,0 +1,42 @@
+# =========================
+# Render Blueprint Spec
+# =========================
+# Deploy with: Render Dashboard → New → Blueprint → Select this repo
+
+services:
+  # ─── Backend (FastAPI + Docker) ───
+  - type: web
+    name: biometric-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        sync: false  # Set manually — your TiDB Cloud MySQL connection string
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ENCRYPTION_KEY
+        sync: false  # Set manually — generate with: python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+      - key: CORS_ORIGINS
+        sync: false  # Set to your frontend URL, e.g. ["https://biometric-frontend.onrender.com"]
+      - key: FACE_SIMILARITY_THRESHOLD
+        value: "0.60"
+      - key: LIVENESS_THRESHOLD
+        value: "0.70"
+      - key: COOLDOWN_MINUTES
+        value: "5"
+      - key: DEBUG
+        value: "false"
+    healthCheckPath: /health
+
+  # ─── Frontend (React + Nginx + Docker) ───
+  - type: web
+    name: biometric-frontend
+    runtime: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        sync: false  # Set to your backend URL, e.g. https://biometric-backend.onrender.com/api/v1
