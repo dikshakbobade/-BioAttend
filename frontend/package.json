@@ -1,6 +1,7 @@
 {
   "name": "biometric-attendance-frontend",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "description": "Admin dashboard for Biometric Attendance System",
   "scripts": {
