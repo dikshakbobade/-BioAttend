@@ -9,8 +9,18 @@ config = context.config
 fileConfig(config.config_file_name)
 target_metadata = Base.metadata
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 def run_migrations_offline():
-    url = config.get_main_option("sqlalchemy.url")
+    url = os.getenv("DATABASE_URL", config.get_main_option("sqlalchemy.url"))
+    # Convert async URL to sync for migrations
+    if "sqlite+aiosqlite" in url:
+        url = url.replace("sqlite+aiosqlite", "sqlite")
+    elif "mysql+aiomysql" in url:
+        url = url.replace("mysql+aiomysql", "mysql+pymysql")
+    
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -23,9 +33,6 @@ def run_migrations_offline():
 def run_migrations_online():
     # Use sync URL for migrations
     # Load from environment
-    import os
-    from dotenv import load_dotenv
-    load_dotenv()
     url = os.getenv("DATABASE_URL", config.get_main_option("sqlalchemy.url"))
     
     # Convert async URL to sync for migrations
