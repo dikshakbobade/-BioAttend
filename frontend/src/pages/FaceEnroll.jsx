@@ -69,10 +69,16 @@ function FaceEnroll() {
     if (!videoRef.current || !canvasRef.current) return null;
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
+
+    // FORCE 640x480 for enrollment. Mobile phones provide high-res streams
+    // that can cause huge base64 payloads (>1MB) which Render might block.
+    canvas.width = 640;
+    canvas.height = 480;
+
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0);
+    // Draw and scale to fit 640x480
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
     return canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
   };
 

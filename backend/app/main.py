@@ -43,6 +43,15 @@ async def lifespan(app: FastAPI):
                 logger.info(f"Initial admin user created: {admin.username}")
                 logger.warning("WARNING: Change the default password immediately!")
 
+            # Warmup Face Engine (Early load models to discover OOM/Timeout issues on boot)
+            try:
+                from app.services.face_engine import get_face_engine
+                logger.info("Initializing Face Engine (buffalo_s)...")
+                get_face_engine()._ensure_initialized()
+                logger.info("Face Engine WARMUP COMPLETE ✅")
+            except Exception as e:
+                logger.error(f"Face Engine Warmup FAILED: {e}")
+
             # Pre-load biometric templates for faster matching
             try:
                 from app.services.matching_service import matching_service
