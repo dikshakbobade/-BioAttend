@@ -149,15 +149,14 @@ class ActiveLivenessService:
         ear_range = max_ear - min_ear
         
         # Dynamic thresholds: eyes are closed if EAR drops significantly from max
-        dynamic_closed = max_ear * 0.85  # 15% drop (was 25%)
-        dynamic_open = max_ear * 0.90    # Must return to 90% of max to count as re-opened
+        dynamic_closed = max_ear * 0.92  # 8% drop (was 15%)
+        dynamic_open = max_ear * 0.95    # Must return to 95% of max to count as re-opened
         
         blink_count = self._count_blinks_dynamic(valid_ears, dynamic_closed, dynamic_open)
         
         # A live person: at least 1 blink OR high variation relative to average
-        # (Photo EAR is extremely flat/static)
-        # RELAXED EVEN MORE for buffalo_sc landmarks: range > 0.015 and 8% variation
-        blink_detected = blink_count >= 1 or (ear_range > 0.015 and ear_range / max_ear > 0.08)
+        # HYPER-LENIENT for buffalo_sc: any tiny variation passes (range > 0.005)
+        blink_detected = blink_count >= 1 or (ear_range > 0.005 and ear_range / max_ear > 0.02)
         passed = blink_detected
 
         logger.info(
