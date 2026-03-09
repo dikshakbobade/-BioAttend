@@ -23,12 +23,22 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Create non-root user
+RUN adduser --disabled-password --gecos '' appuser
+
+# Pre-download InsightFace buffalo_sc model (to avoid downloading on first request)
+RUN apt-get update && apt-get install -y unzip && \
+    mkdir -p /home/appuser/.insightface/models/buffalo_sc && \
+    curl -L "https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_sc.zip" -o buffalo_sc.zip && \
+    unzip buffalo_sc.zip -d /home/appuser/.insightface/models/buffalo_sc && \
+    rm buffalo_sc.zip && \
+    chown -R appuser:appuser /home/appuser/.insightface
+
 # Copy application code
 COPY . .
 
-# Create non-root user
-RUN adduser --disabled-password --gecos '' appuser && \
-    chown -R appuser:appuser /app
+# Set permissions for the app
+RUN chown -R appuser:appuser /app
 USER appuser
 
 # Expose port (Render injects PORT env var)

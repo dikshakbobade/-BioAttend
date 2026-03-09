@@ -1,7 +1,7 @@
 """
 InsightFace Engine — RetinaFace Detection + ArcFace Recognition.
 ================================================================
-Uses InsightFace FaceAnalysis with buffalo_l model for:
+Uses InsightFace FaceAnalysis with buffalo_sc model for:
   - Face Detection (RetinaFace)
   - 512-d Face Embedding (ArcFace)
   - CPU-optimized (GPU optional via ctx_id=0)
@@ -54,9 +54,9 @@ class InsightFaceEngine:
         if not INSIGHTFACE_AVAILABLE:
             raise RuntimeError("InsightFace is required but not installed. Run: pip install insightface")
 
-        logger.info(f"Loading InsightFace buffalo_l (ctx_id={self._ctx_id}, det_size={self._det_size})...")
+        logger.info(f"Loading InsightFace buffalo_sc (ctx_id={self._ctx_id}, det_size={self._det_size})...")
         self._app = FaceAnalysis(
-            name="buffalo_l",
+            name="buffalo_sc",
             providers=["CPUExecutionProvider"] if self._ctx_id < 0 else ["CUDAExecutionProvider", "CPUExecutionProvider"],
         )
         self._app.prepare(ctx_id=self._ctx_id, det_size=self._det_size)
