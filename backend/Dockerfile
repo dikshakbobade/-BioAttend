@@ -26,12 +26,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Create non-root user
 RUN adduser --disabled-password --gecos '' appuser
 
-# Pre-download InsightFace buffalo_sc model (to avoid downloading on first request)
+# Pre-download InsightFace buffalo_s model (to avoid downloading on first request)
 RUN apt-get update && apt-get install -y unzip && \
-    mkdir -p /home/appuser/.insightface/models/buffalo_sc && \
-    curl -L "https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_sc.zip" -o buffalo_sc.zip && \
-    unzip buffalo_sc.zip -d /home/appuser/.insightface/models/buffalo_sc && \
-    rm buffalo_sc.zip && \
+    mkdir -p /home/appuser/.insightface/models/buffalo_s && \
+    curl -L "https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_s.zip" -o buffalo_s.zip && \
+    unzip buffalo_s.zip -d /home/appuser/.insightface/models/buffalo_s && \
+    rm buffalo_s.zip && \
     chown -R appuser:appuser /home/appuser/.insightface
 
 # Copy application code
