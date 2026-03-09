@@ -295,8 +295,18 @@ class MatchingService:
         await db.commit()
         await db.refresh(template)
         
-        # Clear cache to reload with new template
-        template_cache.clear()
+        # Incremental cache update (avoid heavy global reload)
+        try:
+            # 1. Get employee from DB (already have it)
+            # 2. Update local cache
+            template_cache.set_face_template(employee.id, embedding, employee)
+            # 3. Mark as loaded and rebuild index
+            template_cache.set_loaded("FACE")
+            template_cache.rebuild_face_index()
+            logger.info(f"Incremental cache update successful for employee {employee.id}")
+        except Exception as e:
+            logger.error(f"Failed to incrementally update cache: {e}. Clearing to force reload.")
+            template_cache.clear()
         
         return template
     

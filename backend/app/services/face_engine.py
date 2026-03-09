@@ -54,6 +54,12 @@ class InsightFaceEngine:
         if not INSIGHTFACE_AVAILABLE:
             raise RuntimeError("InsightFace is required but not installed. Run: pip install insightface")
 
+        # Optimization: Limit ONNX Runtime to 1 thread for Render Free Tier (0.1 CPU)
+        # This prevents CPU contention and context-switching overhead.
+        import os
+        os.environ["OMP_NUM_THREADS"] = "1"
+        os.environ["MKL_NUM_THREADS"] = "1"
+        
         logger.info(f"Loading InsightFace buffalo_sc hybrid (ctx_id={self._ctx_id}, det_size={self._det_size})...")
         self._app = FaceAnalysis(
             name="buffalo_sc",

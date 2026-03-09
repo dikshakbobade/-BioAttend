@@ -148,12 +148,15 @@ async def health_check():
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    logger.exception(f"Unhandled exception: {exc}")
+    # Always log the full traceback in server logs for debugging
+    logger.exception(f"CRITICAL: Unhandled exception during {request.method} {request.url.path}: {exc}")
+    
     return JSONResponse(
         status_code=500,
         content={
-            "detail": str(exc) if settings.DEBUG else "An unexpected error occurred",
-            "error_code": "INTERNAL_ERROR"
+            "detail": str(exc), # We'll show the message to help the user identify if it's a Timeout/OOM
+            "error_code": "INTERNAL_ERROR",
+            "type": type(exc).__name__
         }
     )
 
