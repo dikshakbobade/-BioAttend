@@ -54,9 +54,10 @@ class InsightFaceEngine:
         if not INSIGHTFACE_AVAILABLE:
             raise RuntimeError("InsightFace is required but not installed. Run: pip install insightface")
 
-        logger.info(f"Loading InsightFace buffalo_s (ctx_id={self._ctx_id}, det_size={self._det_size})...")
+        logger.info(f"Loading InsightFace buffalo_sc hybrid (ctx_id={self._ctx_id}, det_size={self._det_size})...")
         self._app = FaceAnalysis(
-            name="buffalo_s",
+            name="buffalo_sc",
+            allowed_modules=['detection', 'recognition', 'landmark_2d_106'],
             providers=["CPUExecutionProvider"] if self._ctx_id < 0 else ["CUDAExecutionProvider", "CPUExecutionProvider"],
         )
         self._app.prepare(ctx_id=self._ctx_id, det_size=self._det_size)

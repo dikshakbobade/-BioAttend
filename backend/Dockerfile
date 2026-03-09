@@ -26,13 +26,22 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Create non-root user
 RUN adduser --disabled-password --gecos '' appuser
 
-# Pre-download InsightFace buffalo_s model (to avoid downloading on first request)
-RUN apt-get update && apt-get install -y unzip && \
-    mkdir -p /home/appuser/.insightface/models/buffalo_s && \
+# Hybrid Model Strategy: Use buffalo_sc (16MB) + inject landmarks from buffalo_s (5MB)
+# Total footprint ~21MB instead of 160MB.
+RUN apt-get update && apt-get install -y unzip curl && \
+    mkdir -p /home/appuser/.insightface/models/buffalo_sc && \
+    # 1. Download and extract buffalo_sc (Det + Rec)
+    curl -L "https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_sc.zip" -o buffalo_sc.zip && \
+    unzip buffalo_sc.zip -d /home/appuser/.insightface/models/buffalo_sc && \
+    rm buffalo_sc.zip && \
+    # 2. Download buffalo_s ONLY to get the 5MB landmark model
     curl -L "https://github.com/deepinsight/insightface/releases/download/v0.7/buffalo_s.zip" -o buffalo_s.zip && \
-    unzip buffalo_s.zip -d /home/appuser/.insightface/models/buffalo_s && \
-    rm buffalo_s.zip && \
-    chown -R appuser:appuser /home/appuser/.insightface
+    mkdir -p tmp_s && unzip buffalo_s.zip 2d106det.onnx -d tmp_s && \
+    mv tmp_s/2d106det.onnx /home/appuser/.insightface/models/buffalo_sc/ && \
+    rm -rf tmp_s buffalo_s.zip && \
+    # 3. Final cleanup and permissions
+    chown -R appuser:appuser /home/appuser/.insightface && \
+    apt-get purge -y unzip curl && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 # Copy application code
 COPY . .
