@@ -118,7 +118,15 @@ function FaceEnroll() {
       }
     } catch (err) {
       console.error('Enrollment error:', err);
-      alert(err?.response?.data?.detail || err?.message || 'Face enrollment failed');
+      let msg = 'Face enrollment failed';
+      if (err.message === 'Network Error') {
+        msg = 'Network Error: Cannot reach server. Please check your internet or if you are using HTTPS (https://).';
+      } else if (err.response?.status === 404) {
+        msg = 'API Not Found (404): The system might be incorrectly configured. Check VITE_API_URL.';
+      } else {
+        msg = err?.response?.data?.detail || err?.message || msg;
+      }
+      alert(msg);
     } finally {
       setLoading(false);
     }
@@ -139,7 +147,7 @@ function FaceEnroll() {
             <div
               key={s.id}
               className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${idx < enrolledTemplates.length ? 'bg-green-500 text-white' :
-                  idx === currentStepIdx ? 'bg-blue-600 text-white ring-4 ring-blue-100' : 'bg-gray-200 text-gray-500'
+                idx === currentStepIdx ? 'bg-blue-600 text-white ring-4 ring-blue-100' : 'bg-gray-200 text-gray-500'
                 }`}
             >
               {idx < enrolledTemplates.length ? '✓' : idx + 1}

@@ -78,11 +78,21 @@ app = FastAPI(
     redoc_url="/redoc" if settings.DEBUG else None,
 )
 
+# Request context logger (for debugging CORS origins)
+@app.middleware("http")
+async def log_headers_middleware(request: Request, call_next):
+    origin = request.headers.get("origin")
+    if origin:
+        logger.info(f"Incoming request from origin: {origin}")
+    return await call_next(request)
+
 # CORS middleware
+# Note: allow_credentials=True CANNOT be used with allow_origins=["*"]
+# Since we use Bearer tokens in headers (not cookies), we can set this to False.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
