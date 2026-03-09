@@ -401,7 +401,7 @@ async def verify_face_and_mark_attendance(
         vote_embeddings.append(largest_face.normed_embedding)
         
         similarity_threshold = settings.FACE_SIMILARITY_THRESHOLD
-        high_confidence_threshold = 0.75  # Auto-pass if any single frame is this high
+        high_confidence_threshold = 0.60  # Auto-pass if any single frame is this high (was 0.75)
         
         # Tally votes for each employee recognized
         votes = {}  # {employee_id: {"count": N, "max_score": S, "employee": E}}
@@ -674,7 +674,7 @@ async def auto_attend(
                         vote_embeddings.append(emb)
             vote_embeddings.append(largest_face.normed_embedding)
 
-            high_confidence_threshold = 0.75
+            high_confidence_threshold = 0.60
 
             votes = {}
             for emb in vote_embeddings:
