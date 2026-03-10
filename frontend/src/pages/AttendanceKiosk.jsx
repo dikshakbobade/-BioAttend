@@ -14,8 +14,8 @@ const S = {
 };
 
 const DETECTING_MS = 5000;
-const SCAN_INTERVAL = 250;
-const SCAN_FRAMES = 20;
+const SCAN_INTERVAL = 300;
+const SCAN_FRAMES = 8;
 const RESULT_MS = 6000;
 const COOLDOWN_MS = 4000;
 const MOTION_INTERVAL = 400;

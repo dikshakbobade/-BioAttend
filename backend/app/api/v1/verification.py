@@ -220,7 +220,7 @@ async def check_liveness_endpoint(request: LivenessCheckRequest):
     all_frames.append(main_img)
 
     if len(all_frames) >= 3:
-        passed, details = active_liveness.check(all_frames)
+        passed, details, _ = active_liveness.check(all_frames)
         if not passed:
             return LivenessResult(
                 is_live=False, score=0.3,
@@ -328,6 +328,7 @@ async def verify_face_and_mark_attendance(
     # =====================================================
     liveness_details = None
     lv_score = spoof_score  # Default to passive score
+    lv_embeddings = []
 
     all_frames = []
     if request.liveness_frames and len(request.liveness_frames) >= 2:
@@ -338,7 +339,7 @@ async def verify_face_and_mark_attendance(
     all_frames.append(main_img)
 
     if len(all_frames) >= 3:
-        passed, details = active_liveness.check(all_frames)
+        passed, details, lv_embeddings = active_liveness.check(all_frames)
         liveness_details = details
         if passed:
             lv_score = 0.95
@@ -372,36 +373,32 @@ async def verify_face_and_mark_attendance(
     
     if primary_match:
         emp, score = primary_match
-        # If confidence is high enough, Terminate Early to save extraction time on liveness frames
-        if score >= 0.82:
+        # If confidence is high enough, Terminate Early to save voting time
+        if score >= 0.85:
             logger.info(f"⚡ EARLY TERMINATION: High confidence match {score:.3f} for {emp.full_name}")
             best_emp = emp
             best_similarity = score
-            final_best_score = score
-            best_match_id = str(emp.id)
             goto_attendance = True
         else:
             goto_attendance = False
     else:
-        goto_attendance = False
+        # FAIL FAST: If primary frame doesn't match anybody even weakly, don't bother voting
+        logger.info("❌ Primary frame match failed. Skipping temporal voting.")
+        return AttendanceResult(
+            success=False,
+            confidence_score=0.0,
+            liveness_score=lv_score,
+            liveness_details=liveness_details,
+            antispoof_score=spoof_score,
+            message="Face not recognized. Please ensure you are enrolled.",
+        )
 
     if not goto_attendance:
-        # We collect embeddings from the current frame AND liveness frames
-        vote_embeddings = []
+        # Reuse embeddings from liveness check for voting (ZERO extra detection cost)
+        vote_embeddings = lv_embeddings if lv_embeddings else [largest_face.normed_embedding]
+
         
-        # Add embeddings from liveness frames if available
-        # OPTIMIZATION: Only take 2 frames for voting to save time
-        if request.liveness_frames:
-            for fb64 in request.liveness_frames[-2:]:  
-                emb = engine.extract_embedding_from_b64(fb64)
-                if emb is not None:
-                    vote_embeddings.append(emb)
-        
-        # Always add the main/current frame embedding
-        vote_embeddings.append(largest_face.normed_embedding)
-        
-        similarity_threshold = settings.FACE_SIMILARITY_THRESHOLD
-        high_confidence_threshold = 0.60  # Auto-pass if any single frame is this high (was 0.75)
+        high_confidence_threshold = 0.75
         
         # Tally votes for each employee recognized
         votes = {}  # {employee_id: {"count": N, "max_score": S, "employee": E}}
@@ -433,26 +430,19 @@ async def verify_face_and_mark_attendance(
                 logger.info(f"🏆 HIGH CONFIDENCE MATCH: {data['employee'].full_name} ({data['max_score']:.3f})")
                 break
                 
-            # Majority vote check (2+ of 3 frames)
-            if data["count"] >= 2:
+            if data["count"] >= max(1, len(vote_embeddings) // 2):
                 best_match_id = eid
                 final_best_score = data["max_score"]
-                logger.info(f"🗳️ MAJORITY VOTE MATCH: {data['employee'].full_name} ({data['count']} votes)")
                 break
 
         if best_match_id is None:
-            # Fallback to absolute best if neither met (for better debugging feedback)
-            fallback_eid = max(votes.keys(), key=lambda k: votes[k]["max_score"]) if votes else None
-            fallback_score = votes[fallback_eid]["max_score"] if fallback_eid else 0.0
-            
-            vote_list = [f"{v['employee'].full_name}: {v['count']}v" for v in votes.values()]
             return AttendanceResult(
                 success=False,
-                confidence_score=round(fallback_score, 4),
+                confidence_score=0.0,
                 liveness_score=lv_score,
                 liveness_details=liveness_details,
                 antispoof_score=spoof_score,
-                message=f"Face match failed (Votes: {vote_list}). Try clear lighting.",
+                message="Face match failed. Try better lighting.",
             )
 
         best_emp = votes[best_match_id]["employee"]
@@ -614,6 +604,7 @@ async def auto_attend(
         # STEP 3: Eye-Blink Liveness Detection
         liveness_details = None
         lv_score = spoof_score
+        lv_embeddings = []
 
         all_frames = []
         if request.liveness_frames and len(request.liveness_frames) >= 2:
@@ -624,7 +615,7 @@ async def auto_attend(
         all_frames.append(main_img)
 
         if len(all_frames) >= 3:
-            passed, details = active_liveness.check(all_frames)
+            passed, details, lv_embeddings = active_liveness.check(all_frames)
             liveness_details = details
             if passed:
                 lv_score = 0.95
@@ -652,29 +643,31 @@ async def auto_attend(
         
         if primary_match:
             emp, score = primary_match
-            # If confidence is high enough, Terminate Early to save extraction time on liveness frames
-            if score >= 0.82:
+            # If confidence is high enough, Terminate Early to save extra processing
+            if score >= 0.85:
                 logger.info(f"⚡ EARLY TERMINATION: High confidence match {score:.3f} for {emp.full_name}")
                 best_emp = emp
                 best_similarity = score
-                final_best_score = score
-                best_match_id = str(emp.id)
                 goto_attendance = True
             else:
                 goto_attendance = False
         else:
-            goto_attendance = False
+            # FAIL FAST: If primary frame doesn't match anybody even weakly, don't bother voting
+            logger.info("❌ Primary frame match failed. Skipping temporal voting.")
+            return AttendanceResult(
+                success=False,
+                confidence_score=0.0,
+                liveness_score=lv_score,
+                liveness_details=liveness_details,
+                antispoof_score=spoof_score,
+                message="Face not recognized. Please ensure you are enrolled.",
+            )
 
         if not goto_attendance:
-            vote_embeddings = []
-            if request.liveness_frames:
-                for fb64 in request.liveness_frames[-2:]:
-                    emb = engine.extract_embedding_from_b64(fb64)
-                    if emb is not None:
-                        vote_embeddings.append(emb)
-            vote_embeddings.append(largest_face.normed_embedding)
+            # Reuse embeddings from liveness check (ZERO extra detection cost)
+            vote_embeddings = lv_embeddings if lv_embeddings else [largest_face.normed_embedding]
 
-            high_confidence_threshold = 0.60
+            high_confidence_threshold = 0.75
 
             votes = {}
             for emb in vote_embeddings:
@@ -696,20 +689,18 @@ async def auto_attend(
                     best_match_id = eid
                     final_best_score = data["max_score"]
                     break
-                # Only need 2 out of 3 frames to pass
-                if data["count"] >= 2:
+                # Majority vote
+                if data["count"] >= max(1, len(vote_embeddings) // 2):
                     best_match_id = eid
                     final_best_score = data["max_score"]
                     break
 
             if best_match_id is None:
-                fallback_eid = max(votes.keys(), key=lambda k: votes[k]["max_score"]) if votes else None
-                fallback_score = votes[fallback_eid]["max_score"] if fallback_eid else 0.0
                 return AttendanceResult(
-                    success=False, confidence_score=round(fallback_score, 4),
+                    success=False, confidence_score=0.0,
                     liveness_score=lv_score, liveness_details=liveness_details,
                     antispoof_score=spoof_score,
-                    message="Face not recognized. Please ensure you are enrolled.",
+                    message="Face match failed. Try better lighting.",
                 )
 
             best_emp = votes[best_match_id]["employee"]

@@ -78,7 +78,7 @@ class ActiveLivenessService:
             from app.services.face_engine import get_face_engine
             self._engine = get_face_engine()
 
-    def check(self, frames: List[np.ndarray]) -> Tuple[bool, Dict]:
+    def check(self, frames: List[np.ndarray]) -> Tuple[bool, Dict, List[np.ndarray]]:
         """
         Check for eye blinks across a sequence of frames.
 
@@ -86,7 +86,7 @@ class ActiveLivenessService:
             frames: List of BGR OpenCV images (at least 3)
 
         Returns:
-            (passed, details_dict)
+            (passed, details_dict, embeddings_list)
         """
         if not frames or len(frames) < 3:
             return False, {
@@ -97,25 +97,29 @@ class ActiveLivenessService:
                 "smile_detected": False,
                 "checks_passed": 0,
                 "checks_required": 1,
-            }
+            }, []
 
         self._ensure_engine()
 
         # Step 1: Extract EAR from each frame
         ear_values = []
         frames_with_face = 0
+        embeddings = []
 
         for frame in frames:
-            # OPTIMIZATION: Use 640px for liveness frames.
+            # OPTIMIZATION: Use 480px for liveness frames.
             # 320px was too low for accurate eyes/landmarks at a distance.
-            # 640px provides a better balance for landmark fidelity on CPU.
-            faces = self._engine.detect_faces(frame, max_size=640)
+            # 480px provides a better balance for landmark fidelity on CPU.
+            faces = self._engine.detect_faces(frame, max_size=480)
             if not faces:
                 ear_values.append(None)
                 continue
 
             largest = max(faces, key=lambda f: (f.bbox[2]-f.bbox[0]) * (f.bbox[3]-f.bbox[1]))
-
+            
+            # Store embedding for Temporal Voting reuse
+            if hasattr(largest, 'normed_embedding') and largest.normed_embedding is not None:
+                embeddings.append(largest.normed_embedding)
 
             # Need 106-point landmarks for EAR
             if hasattr(largest, 'landmark_2d_106') and largest.landmark_2d_106 is not None:
@@ -140,22 +144,19 @@ class ActiveLivenessService:
                 "smile_detected": False,
                 "checks_passed": 0,
                 "checks_required": 1,
-            }
+            }, embeddings
 
         # Step 2: Detect blinks using DYNAMIC EAR pattern
-        # Find the baseline "open" EAR (max value in sequence)
         max_ear = max(valid_ears)
         min_ear = min(valid_ears)
         ear_range = max_ear - min_ear
         
-        # Dynamic thresholds: eyes are closed if EAR drops significantly from max
-        dynamic_closed = max_ear * 0.92  # 8% drop (was 15%)
-        dynamic_open = max_ear * 0.95    # Must return to 95% of max to count as re-opened
+        dynamic_closed = max_ear * 0.92
+        dynamic_open = max_ear * 0.95
         
         blink_count = self._count_blinks_dynamic(valid_ears, dynamic_closed, dynamic_open)
         
         # A live person: at least 1 blink OR high variation relative to average
-        # HYPER-LENIENT for buffalo_sc: any tiny variation passes (range > 0.005)
         blink_detected = blink_count >= 1 or (ear_range > 0.005 and ear_range / max_ear > 0.02)
         passed = blink_detected
 
@@ -181,7 +182,7 @@ class ActiveLivenessService:
             },
         }
 
-        return passed, details
+        return passed, details, embeddings
 
     def _count_blinks_dynamic(self, ear_values: List[float], closed_thresh: float, open_thresh: float) -> int:
         """Count blinks using dynamic thresholds."""
