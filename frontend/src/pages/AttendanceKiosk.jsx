@@ -177,11 +177,20 @@ export default function AttendanceKiosk() {
   const captureFrame = useCallback(() => {
     if (!videoRef.current || !canvasRef.current) return null;
     const v = videoRef.current, c = canvasRef.current;
-    if (!v.videoWidth) return null;
-    c.width = v.videoWidth; c.height = v.videoHeight;
+
+    // Force 480p for ultra-fast processing
+    const TARGET_W = 640;
+    const TARGET_H = 480;
+
+    c.width = TARGET_W;
+    c.height = TARGET_H;
+
     const ctx = c.getContext('2d');
-    ctx.drawImage(v, 0, 0);
-    return c.toDataURL('image/jpeg', 0.8).split(',')[1];
+    // Draw and scale if necessary
+    ctx.drawImage(v, 0, 0, TARGET_W, TARGET_H);
+
+    // Reduced quality to 0.5 to shrink payload size significantly
+    return c.toDataURL('image/jpeg', 0.5).split(',')[1];
   }, []);
 
   // ── Motion ───────────────────────────────────────────────────

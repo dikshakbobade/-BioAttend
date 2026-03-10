@@ -299,7 +299,7 @@ async def verify_face_and_mark_attendance(
     # STEP 1: RetinaFace Detection
     # =====================================================
     try:
-        faces = engine.detect_faces(main_img)
+        faces = engine.detect_faces(main_img, max_size=480)
         if not faces:
             print("[DEBUG] No face detected")
             return AttendanceResult(
@@ -583,7 +583,7 @@ async def auto_attend(
 
         # STEP 1: RetinaFace Detection
         try:
-            faces = engine.detect_faces(main_img)
+            faces = engine.detect_faces(main_img, max_size=480)
             if not faces:
                 return AttendanceResult(
                     success=False,
