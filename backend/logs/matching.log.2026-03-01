@@ -1,0 +1,23 @@
+2026-03-01T11:33:32 MATCH | employee='Dikshak Bobade' | score=0.7727 | elapsed=2.0ms | threshold=0.75
+2026-03-01T11:33:32 MATCH | employee='Dikshak Bobadeff' | score=0.7569 | elapsed=1.2ms | threshold=0.75
+2026-03-01T11:33:32 MATCH | employee='Dikshak Bobadeff' | score=0.7539 | elapsed=0.7ms | threshold=0.75
+2026-03-01T11:33:32 MATCH | employee='Dikshak Bobade' | score=0.7516 | elapsed=0.6ms | threshold=0.75
+2026-03-01T11:33:32 NO_MATCH | elapsed=0.5ms | threshold=0.75
+2026-03-01T11:33:32 PIPELINE_DONE | employee='Dikshak Bobade' | score=0.7727 | total_ms=3637.2
+2026-03-01T12:34:17 MATCH | employee='Dikshak Bobade' | score=0.7677 | elapsed=2.8ms | threshold=0.75
+2026-03-01T12:34:17 MATCH | employee='Dikshak Bobade' | score=0.7639 | elapsed=1.6ms | threshold=0.75
+2026-03-01T12:34:17 MATCH | employee='Dikshak Bobade' | score=0.7745 | elapsed=1.6ms | threshold=0.75
+2026-03-01T12:34:17 NO_MATCH | elapsed=1.3ms | threshold=0.75
+2026-03-01T12:34:17 MATCH | employee='Dikshak Bobade' | score=0.7763 | elapsed=0.7ms | threshold=0.75
+2026-03-01T12:34:17 PIPELINE_DONE | employee='Dikshak Bobade' | score=0.7763 | total_ms=5876.8
+2026-03-01T22:07:05 NO_MATCH | elapsed=1.4ms
+2026-03-01T22:07:05 NO_MATCH | elapsed=0.5ms
+2026-03-01T22:07:05 NO_MATCH | elapsed=0.5ms
+2026-03-01T22:07:05 NO_MATCH | elapsed=0.4ms
+2026-03-01T22:07:05 NO_MATCH | elapsed=0.3ms
+2026-03-01T22:07:35 MATCH | employee='Dikshak Bobade' | score=0.7716 | elapsed=0.8ms
+2026-03-01T22:07:35 MATCH | employee='Dikshak Bobade' | score=0.7634 | elapsed=0.7ms
+2026-03-01T22:07:35 MATCH | employee='Dikshak Bobade' | score=0.7723 | elapsed=0.5ms
+2026-03-01T22:07:35 MATCH | employee='Dikshak Bobade' | score=0.7551 | elapsed=0.4ms
+2026-03-01T22:07:35 MATCH | employee='Dikshak Bobade' | score=0.7858 | elapsed=0.3ms
+2026-03-01T22:07:35 PIPELINE_DONE | employee='Dikshak Bobade' | score=0.7858 | total_ms=4225.2

@@ -1,0 +1,6 @@
+2026-03-06T12:59:43 NO_MATCH | elapsed=2.2ms
+2026-03-06T12:59:43 NO_MATCH | elapsed=1.1ms
+2026-03-06T12:59:43 NO_MATCH | elapsed=0.9ms
+2026-03-06T12:59:43 NO_MATCH | elapsed=1.0ms
+2026-03-06T12:59:43 MATCH | employee='Dikshak Bobade' | score=0.7855 | elapsed=0.9ms
+2026-03-06T12:59:43 PIPELINE_DONE | employee='Dikshak Bobade' | score=0.7855 | total_ms=5186.5

@@ -1,0 +1,251 @@
+2026-03-04T11:32:00 NO_MATCH | elapsed=3.7ms
+2026-03-04T11:32:00 MATCH | employee='Dikshak Bobade' | score=0.7537 | elapsed=0.8ms
+2026-03-04T11:32:00 MATCH | employee='Dikshak Bobade' | score=0.7888 | elapsed=1.2ms
+2026-03-04T11:32:00 MATCH | employee='Dikshak Bobade' | score=0.7825 | elapsed=0.8ms
+2026-03-04T11:32:00 MATCH | employee='Dikshak Bobade' | score=0.7766 | elapsed=0.6ms
+2026-03-04T11:32:00 PIPELINE_DONE | employee='Dikshak Bobade' | score=0.7888 | total_ms=8200.0
+2026-03-04T11:38:15 MATCH | employee='Aarohi dongo' | score=0.7855 | elapsed=0.5ms
+2026-03-04T11:38:15 MATCH | employee='Aarohi dongo' | score=0.8193 | elapsed=0.5ms
+2026-03-04T11:38:15 MATCH | employee='Aarohi dongo' | score=0.8177 | elapsed=0.4ms
+2026-03-04T11:38:15 MATCH | employee='Aarohi dongo' | score=0.7904 | elapsed=0.4ms
+2026-03-04T11:38:15 MATCH | employee='Aarohi dongo' | score=0.7772 | elapsed=0.3ms
+2026-03-04T11:38:15 PIPELINE_DONE | employee='Aarohi dongo' | score=0.8193 | total_ms=3593.6
+2026-03-04T11:38:29 MATCH | employee='Aarohi dongo' | score=0.8100 | elapsed=0.6ms
+2026-03-04T11:38:29 MATCH | employee='Aarohi dongo' | score=0.8218 | elapsed=0.5ms
+2026-03-04T11:38:29 MATCH | employee='Aarohi dongo' | score=0.8231 | elapsed=0.5ms
+2026-03-04T11:38:29 MATCH | employee='Aarohi dongo' | score=0.8006 | elapsed=0.4ms
+2026-03-04T11:38:29 MATCH | employee='Aarohi dongo' | score=0.7962 | elapsed=0.4ms
+2026-03-04T11:38:29 PIPELINE_DONE | employee='Aarohi dongo' | score=0.8231 | total_ms=3695.5
+2026-03-04T11:38:58 MATCH | employee='Aarohi dongo' | score=0.8820 | elapsed=0.6ms
+2026-03-04T11:38:58 MATCH | employee='Aarohi dongo' | score=0.8827 | elapsed=0.6ms
+2026-03-04T11:38:58 MATCH | employee='Aarohi dongo' | score=0.8580 | elapsed=0.6ms
+2026-03-04T11:38:58 MATCH | employee='Aarohi dongo' | score=0.8439 | elapsed=0.6ms
+2026-03-04T11:38:58 MATCH | employee='Aarohi dongo' | score=0.8496 | elapsed=0.7ms
+2026-03-04T11:38:58 PIPELINE_DONE | employee='Aarohi dongo' | score=0.8827 | total_ms=3537.4
+2026-03-04T11:41:22 NO_MATCH | elapsed=0.5ms
+2026-03-04T11:41:22 NO_MATCH | elapsed=0.4ms
+2026-03-04T11:41:22 NO_MATCH | elapsed=0.4ms
+2026-03-04T11:41:22 NO_MATCH | elapsed=0.4ms
+2026-03-04T11:41:22 NO_MATCH | elapsed=0.5ms
+2026-03-04T11:42:30 MATCH | employee='Aarohi Dongarwar' | score=0.8957 | elapsed=0.6ms
+2026-03-04T11:42:30 MATCH | employee='Aarohi Dongarwar' | score=0.8779 | elapsed=0.4ms
+2026-03-04T11:42:30 MATCH | employee='Aarohi Dongarwar' | score=0.8666 | elapsed=0.4ms
+2026-03-04T11:42:30 MATCH | employee='Aarohi Dongarwar' | score=0.8765 | elapsed=0.6ms
+2026-03-04T11:42:30 MATCH | employee='Aarohi Dongarwar' | score=0.8859 | elapsed=0.4ms
+2026-03-04T11:42:30 PIPELINE_DONE | employee='Aarohi Dongarwar' | score=0.8957 | total_ms=3566.2
+2026-03-04T11:43:18 MATCH | employee='Aarohi Dongarwar' | score=0.8553 | elapsed=0.7ms
+2026-03-04T11:43:18 MATCH | employee='Aarohi Dongarwar' | score=0.8233 | elapsed=0.4ms
+2026-03-04T11:43:18 MATCH | employee='Aarohi Dongarwar' | score=0.8367 | elapsed=0.4ms
+2026-03-04T11:43:18 MATCH | employee='Aarohi Dongarwar' | score=0.8329 | elapsed=1.2ms
+2026-03-04T11:43:18 MATCH | employee='Aarohi Dongarwar' | score=0.8325 | elapsed=0.9ms
+2026-03-04T11:43:18 PIPELINE_DONE | employee='Aarohi Dongarwar' | score=0.8553 | total_ms=3590.9
+2026-03-04T11:43:28 MATCH | employee='Aarohi Dongarwar' | score=0.8503 | elapsed=0.7ms
+2026-03-04T11:43:28 MATCH | employee='Aarohi Dongarwar' | score=0.8561 | elapsed=0.5ms
+2026-03-04T11:43:28 MATCH | employee='Aarohi Dongarwar' | score=0.8463 | elapsed=0.4ms
+2026-03-04T11:43:28 MATCH | employee='Aarohi Dongarwar' | score=0.8511 | elapsed=0.4ms
+2026-03-04T11:43:28 MATCH | employee='Aarohi Dongarwar' | score=0.8406 | elapsed=0.4ms
+2026-03-04T11:43:28 PIPELINE_DONE | employee='Aarohi Dongarwar' | score=0.8561 | total_ms=3529.1
+2026-03-04T11:53:24 MATCH | employee='Ujwala Bijewar' | score=0.8222 | elapsed=1.3ms
+2026-03-04T11:53:24 MATCH | employee='Ujwala Bijewar' | score=0.8100 | elapsed=0.9ms
+2026-03-04T11:53:24 MATCH | employee='Ujwala Bijewar' | score=0.7876 | elapsed=1.1ms
+2026-03-04T11:53:24 MATCH | employee='Ujwala Bijewar' | score=0.8636 | elapsed=1.2ms
+2026-03-04T11:53:24 MATCH | employee='Ujwala Bijewar' | score=0.8254 | elapsed=1.2ms
+2026-03-04T11:53:24 PIPELINE_DONE | employee='Ujwala Bijewar' | score=0.8636 | total_ms=5369.3
+2026-03-04T16:50:26 NO_MATCH | elapsed=3.6ms
+2026-03-04T16:50:26 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:50:26 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:50:26 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:50:26 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:14 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:14 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:14 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:14 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:14 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:24 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:24 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:24 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:24 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:24 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:51:34 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:51:43 NO_MATCH | elapsed=0.5ms
+2026-03-04T16:51:43 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:51:43 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:51:43 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:51:43 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:52:09 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:52:09 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:52:09 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:52:09 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:52:09 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:52:34 NO_MATCH | elapsed=0.3ms
+2026-03-04T16:52:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:52:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:52:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:52:34 NO_MATCH | elapsed=0.2ms
+2026-03-04T16:54:00 MATCH | employee='Aarohi Dongarwar ' | score=0.8207 | elapsed=2.3ms
+2026-03-04T16:54:00 MATCH | employee='Aarohi Dongarwar ' | score=0.8366 | elapsed=1.1ms
+2026-03-04T16:54:00 MATCH | employee='Aarohi Dongarwar ' | score=0.8146 | elapsed=0.6ms
+2026-03-04T16:54:00 MATCH | employee='Aarohi Dongarwar ' | score=0.8402 | elapsed=0.6ms
+2026-03-04T16:54:00 MATCH | employee='Aarohi Dongarwar ' | score=0.7542 | elapsed=0.5ms
+2026-03-04T16:54:00 PIPELINE_DONE | employee='Aarohi Dongarwar ' | score=0.8402 | total_ms=3784.2
+2026-03-04T16:55:00 NO_MATCH | elapsed=0.7ms
+2026-03-04T16:55:00 NO_MATCH | elapsed=0.7ms
+2026-03-04T16:55:00 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:55:00 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:55:00 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:55:22 NO_MATCH | elapsed=0.8ms
+2026-03-04T16:55:22 NO_MATCH | elapsed=0.7ms
+2026-03-04T16:55:22 NO_MATCH | elapsed=0.7ms
+2026-03-04T16:55:22 NO_MATCH | elapsed=0.6ms
+2026-03-04T16:55:22 NO_MATCH | elapsed=0.8ms
+2026-03-04T16:55:38 NO_MATCH | elapsed=0.5ms
+2026-03-04T16:55:38 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:55:38 NO_MATCH | elapsed=0.5ms
+2026-03-04T16:55:38 NO_MATCH | elapsed=0.5ms
+2026-03-04T16:55:38 NO_MATCH | elapsed=0.4ms
+2026-03-04T16:58:06 MATCH | employee='Rushikesh zod' | score=0.8866 | elapsed=0.7ms
+2026-03-04T16:58:06 MATCH | employee='Rushikesh zod' | score=0.8568 | elapsed=0.7ms
+2026-03-04T16:58:06 MATCH | employee='Rushikesh zod' | score=0.8835 | elapsed=0.8ms
+2026-03-04T16:58:06 MATCH | employee='Rushikesh zod' | score=0.8656 | elapsed=0.7ms
+2026-03-04T16:58:06 MATCH | employee='Rushikesh zod' | score=0.8849 | elapsed=111.8ms
+2026-03-04T16:58:06 PIPELINE_DONE | employee='Rushikesh zod' | score=0.8866 | total_ms=3986.2
+2026-03-04T17:00:53 MATCH | employee='vanshya ' | score=0.8193 | elapsed=0.4ms
+2026-03-04T17:00:53 MATCH | employee='vanshya ' | score=0.8212 | elapsed=0.4ms
+2026-03-04T17:00:53 MATCH | employee='vanshya ' | score=0.8151 | elapsed=0.4ms
+2026-03-04T17:00:53 MATCH | employee='vanshya ' | score=0.8228 | elapsed=0.3ms
+2026-03-04T17:00:53 MATCH | employee='vanshya ' | score=0.8494 | elapsed=0.3ms
+2026-03-04T17:00:53 PIPELINE_DONE | employee='vanshya ' | score=0.8494 | total_ms=11327.9
+2026-03-04T17:03:02 MATCH | employee='Aaro' | score=0.8744 | elapsed=3680.2ms
+2026-03-04T17:03:02 MATCH | employee='Aaro' | score=0.8612 | elapsed=1.8ms
+2026-03-04T17:03:06 MATCH | employee='Aaro' | score=0.8345 | elapsed=3380.0ms
+2026-03-04T17:03:09 MATCH | employee='Aaro' | score=0.8662 | elapsed=3259.9ms
+2026-03-04T17:03:09 MATCH | employee='Aaro' | score=0.8546 | elapsed=2.0ms
+2026-03-04T17:03:09 PIPELINE_DONE | employee='Aaro' | score=0.8744 | total_ms=28243.8
+2026-03-04T17:03:55 MATCH | employee='Aaro' | score=0.8707 | elapsed=885.9ms
+2026-03-04T17:03:55 MATCH | employee='Aaro' | score=0.8777 | elapsed=1.3ms
+2026-03-04T17:03:56 MATCH | employee='Aaro' | score=0.8596 | elapsed=662.6ms
+2026-03-04T17:03:56 MATCH | employee='Aaro' | score=0.8843 | elapsed=0.6ms
+2026-03-04T17:03:56 MATCH | employee='Aaro' | score=0.8784 | elapsed=0.5ms
+2026-03-04T17:03:56 PIPELINE_DONE | employee='Aaro' | score=0.8843 | total_ms=11602.8
+2026-03-04T17:07:10 NO_MATCH | elapsed=536.4ms
+2026-03-04T17:07:10 NO_MATCH | elapsed=1.1ms
+2026-03-04T17:07:10 NO_MATCH | elapsed=0.8ms
+2026-03-04T17:07:10 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:07:10 NO_MATCH | elapsed=0.3ms
+2026-03-04T17:07:55 NO_MATCH | elapsed=527.6ms
+2026-03-04T17:07:55 NO_MATCH | elapsed=1.0ms
+2026-03-04T17:07:56 NO_MATCH | elapsed=562.4ms
+2026-03-04T17:07:56 NO_MATCH | elapsed=0.7ms
+2026-03-04T17:07:56 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:11:38 NO_MATCH | elapsed=655.7ms
+2026-03-04T17:11:38 NO_MATCH | elapsed=0.9ms
+2026-03-04T17:11:38 NO_MATCH | elapsed=659.6ms
+2026-03-04T17:11:38 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:11:38 NO_MATCH | elapsed=0.3ms
+2026-03-04T17:12:02 NO_MATCH | elapsed=656.3ms
+2026-03-04T17:12:02 NO_MATCH | elapsed=1.0ms
+2026-03-04T17:12:03 NO_MATCH | elapsed=642.0ms
+2026-03-04T17:12:03 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:12:03 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:12:28 NO_MATCH | elapsed=1098.1ms
+2026-03-04T17:12:28 NO_MATCH | elapsed=3.3ms
+2026-03-04T17:12:28 NO_MATCH | elapsed=557.4ms
+2026-03-04T17:12:29 NO_MATCH | elapsed=902.4ms
+2026-03-04T17:12:29 NO_MATCH | elapsed=1.3ms
+2026-03-04T17:12:57 NO_MATCH | elapsed=1053.8ms
+2026-03-04T17:12:57 NO_MATCH | elapsed=237.1ms
+2026-03-04T17:12:58 NO_MATCH | elapsed=715.9ms
+2026-03-04T17:12:58 NO_MATCH | elapsed=477.8ms
+2026-03-04T17:12:58 NO_MATCH | elapsed=1.0ms
+2026-03-04T17:13:22 NO_MATCH | elapsed=885.5ms
+2026-03-04T17:13:22 NO_MATCH | elapsed=214.6ms
+2026-03-04T17:13:23 NO_MATCH | elapsed=554.2ms
+2026-03-04T17:13:24 NO_MATCH | elapsed=650.9ms
+2026-03-04T17:13:26 NO_MATCH | elapsed=2371.7ms
+2026-03-04T17:13:29 NO_MATCH | elapsed=348.9ms
+2026-03-04T17:13:30 NO_MATCH | elapsed=325.6ms
+2026-03-04T17:13:30 NO_MATCH | elapsed=224.5ms
+2026-03-04T17:13:30 NO_MATCH | elapsed=227.8ms
+2026-03-04T17:13:30 NO_MATCH | elapsed=0.8ms
+2026-03-04T17:14:20 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:14:20 NO_MATCH | elapsed=1.6ms
+2026-03-04T17:14:20 NO_MATCH | elapsed=1.6ms
+2026-03-04T17:14:20 NO_MATCH | elapsed=2.2ms
+2026-03-04T17:14:20 NO_MATCH | elapsed=1.9ms
+2026-03-04T17:14:50 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:14:50 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:14:50 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:14:50 NO_MATCH | elapsed=0.3ms
+2026-03-04T17:14:50 NO_MATCH | elapsed=0.3ms
+2026-03-04T17:21:22 NO_MATCH | elapsed=0.6ms
+2026-03-04T17:21:22 NO_MATCH | elapsed=0.6ms
+2026-03-04T17:21:22 MATCH | employee='Dikshak Bobade' | score=0.7560 | elapsed=0.4ms
+2026-03-04T17:21:22 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:21:22 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:21:22 PIPELINE_DONE | employee='Dikshak Bobade' | score=0.7560 | total_ms=3939.5
+2026-03-04T17:22:09 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:22:09 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:22:09 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:22:09 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:22:09 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:27:00 MATCH | employee='ritansh khapre' | score=0.8116 | elapsed=1.1ms
+2026-03-04T17:27:00 MATCH | employee='ritansh khapre' | score=0.8780 | elapsed=0.9ms
+2026-03-04T17:27:00 MATCH | employee='ritansh khapre' | score=0.8516 | elapsed=0.7ms
+2026-03-04T17:27:00 MATCH | employee='ritansh khapre' | score=0.8223 | elapsed=0.6ms
+2026-03-04T17:27:00 MATCH | employee='ritansh khapre' | score=0.8404 | elapsed=0.6ms
+2026-03-04T17:27:00 PIPELINE_DONE | employee='ritansh khapre' | score=0.8780 | total_ms=5046.4
+2026-03-04T17:28:07 NO_MATCH | elapsed=0.6ms
+2026-03-04T17:28:07 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:28:07 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:28:07 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:28:07 NO_MATCH | elapsed=0.3ms
+2026-03-04T17:33:52 MATCH | employee='Himanshu Vaidya' | score=0.8391 | elapsed=0.7ms
+2026-03-04T17:33:52 MATCH | employee='Himanshu Vaidya' | score=0.8358 | elapsed=0.6ms
+2026-03-04T17:33:52 MATCH | employee='Himanshu Vaidya' | score=0.8299 | elapsed=0.5ms
+2026-03-04T17:33:52 MATCH | employee='Himanshu Vaidya' | score=0.8168 | elapsed=0.6ms
+2026-03-04T17:33:52 MATCH | employee='Himanshu Vaidya' | score=0.8068 | elapsed=0.7ms
+2026-03-04T17:33:52 PIPELINE_DONE | employee='Himanshu Vaidya' | score=0.8391 | total_ms=5287.5
+2026-03-04T17:35:11 MATCH | employee='Himanshu Vaidya' | score=0.8513 | elapsed=0.8ms
+2026-03-04T17:35:11 MATCH | employee='Himanshu Vaidya' | score=0.8505 | elapsed=0.7ms
+2026-03-04T17:35:11 MATCH | employee='Himanshu Vaidya' | score=0.8515 | elapsed=0.6ms
+2026-03-04T17:35:11 MATCH | employee='Himanshu Vaidya' | score=0.8454 | elapsed=0.5ms
+2026-03-04T17:35:11 MATCH | employee='Himanshu Vaidya' | score=0.8546 | elapsed=1.0ms
+2026-03-04T17:35:11 PIPELINE_DONE | employee='Himanshu Vaidya' | score=0.8546 | total_ms=5033.2
+2026-03-04T17:35:38 MATCH | employee='Ujwala Bijewar' | score=0.7826 | elapsed=0.7ms
+2026-03-04T17:35:38 MATCH | employee='Ujwala Bijewar' | score=0.7787 | elapsed=0.4ms
+2026-03-04T17:35:38 MATCH | employee='Ujwala Bijewar' | score=0.7706 | elapsed=0.5ms
+2026-03-04T17:35:38 MATCH | employee='Ujwala Bijewar' | score=0.7880 | elapsed=0.4ms
+2026-03-04T17:35:38 MATCH | employee='Ujwala Bijewar' | score=0.8006 | elapsed=0.4ms
+2026-03-04T17:35:38 PIPELINE_DONE | employee='Ujwala Bijewar' | score=0.8006 | total_ms=10316.4
+2026-03-04T17:35:53 MATCH | employee='ritansh khapre' | score=0.8401 | elapsed=0.9ms
+2026-03-04T17:35:53 MATCH | employee='ritansh khapre' | score=0.8165 | elapsed=1.0ms
+2026-03-04T17:35:53 MATCH | employee='ritansh khapre' | score=0.8286 | elapsed=0.7ms
+2026-03-04T17:35:53 MATCH | employee='ritansh khapre' | score=0.8106 | elapsed=0.6ms
+2026-03-04T17:35:53 MATCH | employee='ritansh khapre' | score=0.8138 | elapsed=0.8ms
+2026-03-04T17:35:53 PIPELINE_DONE | employee='ritansh khapre' | score=0.8401 | total_ms=8714.9
+2026-03-04T17:36:12 NO_MATCH | elapsed=0.8ms
+2026-03-04T17:36:12 NO_MATCH | elapsed=0.8ms
+2026-03-04T17:36:12 NO_MATCH | elapsed=0.6ms
+2026-03-04T17:36:12 NO_MATCH | elapsed=0.5ms
+2026-03-04T17:36:12 NO_MATCH | elapsed=0.4ms
+2026-03-04T17:37:54 NO_MATCH | elapsed=861.2ms
+2026-03-04T17:37:55 NO_MATCH | elapsed=659.0ms
+2026-03-04T17:37:55 NO_MATCH | elapsed=646.4ms
+2026-03-04T17:37:55 NO_MATCH | elapsed=264.4ms
+2026-03-04T17:37:55 NO_MATCH | elapsed=1.9ms
+2026-03-04T17:39:33 MATCH | employee='Vansh Kodarlikar' | score=0.8053 | elapsed=515.5ms
+2026-03-04T17:39:33 MATCH | employee='Vansh Kodarlikar' | score=0.8118 | elapsed=0.8ms
+2026-03-04T17:39:33 MATCH | employee='Vansh Kodarlikar' | score=0.8134 | elapsed=0.6ms
+2026-03-04T17:39:33 MATCH | employee='Vansh Kodarlikar' | score=0.8140 | elapsed=0.7ms
+2026-03-04T17:39:33 MATCH | employee='Vansh Kodarlikar' | score=0.8686 | elapsed=1.5ms
+2026-03-04T17:39:33 PIPELINE_DONE | employee='Vansh Kodarlikar' | score=0.8686 | total_ms=8041.7
+2026-03-04T17:39:58 MATCH | employee='Vansh Kodarlikar' | score=0.8139 | elapsed=286.0ms
+2026-03-04T17:39:58 MATCH | employee='Vansh Kodarlikar' | score=0.8008 | elapsed=251.5ms
+2026-03-04T17:39:58 MATCH | employee='Vansh Kodarlikar' | score=0.8295 | elapsed=0.8ms
+2026-03-04T17:39:58 MATCH | employee='Vansh Kodarlikar' | score=0.8574 | elapsed=0.7ms
+2026-03-04T17:39:58 MATCH | employee='Vansh Kodarlikar' | score=0.8473 | elapsed=0.6ms
+2026-03-04T17:39:58 PIPELINE_DONE | employee='Vansh Kodarlikar' | score=0.8574 | total_ms=8008.3
