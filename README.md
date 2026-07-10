@@ -1,19 +1,17 @@
-# Biometric Attendance System
+# BioAttend — Biometric Attendance System
 
 A production-ready dual-biometric (face + fingerprint) attendance system for office environments supporting 50-60 employees.
 
 ## 🏗️ Architecture Overview
-
-```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         OFFICE NETWORK                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
-│  │ Face Agent   │    │ Fingerprint  │    │  Admin Dashboard │  │
-│  │ (Entry Gate) │    │    Agent     │    │    (React SPA)   │  │
-│  │              │    │ (Exit Gate)  │    │                  │  │
-│  └──────┬───────┘    └──────┬───────┘    └────────┬─────────┘  │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐   │
+│  │ Face Agent   │    │ Fingerprint  │    │  Admin Dashboard │   │
+│  │ (Entry Gate) │    │    Agent     │    │    (React SPA)   │   │
+│  │              │    │ (Exit Gate)  │    │                  │   │
+│  └──────┬───────┘    └──────┬───────┘    └────────┬─────────┘   │
 │         │                   │                     │             │
 │         │ HTTPS/API Key     │ HTTPS/API Key       │ HTTPS/JWT   │
 │         │                   │                     │             │
@@ -25,16 +23,39 @@ A production-ready dual-biometric (face + fingerprint) attendance system for off
 │                    └────────┬────────┘                          │
 │                             │                                   │
 │                    ┌────────▼────────┐                          │
-│                    │   PostgreSQL    │                          │
-│                    │   (Port 5432)   │                          │
+│                    │     MySQL 8     │                          │
+│                    │   (Port 3306)   │                          │
 │                    └─────────────────┘                          │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
-```
+
+## 📸 Screenshots
+
+### Login
+![Login](docs/screenshots/login.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Live Dashboard
+![Dashboard Live](docs/screenshots/dashboard-live.png)
+
+### Employees
+![Employees](docs/screenshots/employees.png)
+
+### Attendance Kiosk — Check In
+![Kiosk Check-in](docs/screenshots/kiosk-checkin.png)
+
+### Attendance Kiosk — Check Out
+![Kiosk Check-out](docs/screenshots/kiosk-checkout.png)
+
+## 🎥 Demo Video
+
+[▶️ Watch Demo Video](docs/Video/Demo.mp4)
+
+> Note: GitHub doesn't play `.mp4` inline via markdown — this link will download/open the file. For an inline-playable video, drag-drop the mp4 into a new GitHub Issue comment box (don't submit the issue), copy the generated `https://github.com/user-attachments/...` link, and swap it in above — it'll render as an inline player.
 
 ## 📁 Project Structure
-
-```
 biometric-attendance-system/
 ├── backend/                    # FastAPI Backend Server
 │   ├── app/
@@ -64,29 +85,37 @@ biometric-attendance-system/
 │   ├── package.json
 │   └── vite.config.js
 ├── scripts/                    # Utility scripts
+├── docs/                       # Screenshots and demo video
 ├── docker-compose.yml
 └── README.md
-```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Python 3.10+
-- PostgreSQL 13+
+- Python 3.10+ (⚠️ some dependencies like `insightface`, `onnxruntime`, and `mediapipe` may lack pre-built wheels for the very latest Python versions — 3.10 or 3.11 is recommended)
+- MySQL 8+ (via Docker, recommended — see Docker Deployment below)
 - Node.js 18+ (for frontend)
 - Camera (for face agent)
 - USB Fingerprint Scanner (Mantra MFS100/SecuGen/ZKTeco)
 
 ### 1. Database Setup
 
+The recommended way to run MySQL locally is via Docker Compose, which handles this for you:
+
 ```bash
-# Create PostgreSQL database
-sudo -u postgres psql
-CREATE DATABASE biometric_attendance;
-CREATE USER biometric_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE biometric_attendance TO biometric_user;
-\q
+docker-compose up -d db
+```
+
+This starts a MySQL 8 container, mapping host port `3307` → container port `3306` (adjust in `docker-compose.yml` if you need a different host port).
+
+If you prefer a manually installed MySQL instance instead of Docker:
+
+```sql
+CREATE DATABASE bioattend_db;
+CREATE USER 'bioattend_user'@'localhost' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON bioattend_db.* TO 'bioattend_user'@'localhost';
+FLUSH PRIVILEGES;
 ```
 
 ### 2. Backend Setup
@@ -104,7 +133,8 @@ pip install -r requirements.txt
 
 # Configure environment
 cp .env.example .env
-# Edit .env with your database credentials and settings
+# Edit .env — set DATABASE_URL to your MySQL connection string, e.g.:
+# DATABASE_URL=mysql+aiomysql://bioattend_user:your_password@localhost:3307/bioattend_db
 
 # Run migrations
 alembic upgrade head
@@ -112,6 +142,8 @@ alembic upgrade head
 # Start the server
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
+
+> **Important:** The backend uses `aiomysql`/`PyMySQL` drivers (MySQL), not `asyncpg` (PostgreSQL). Make sure `backend/.env.example` and your `.env` both use the `mysql+aiomysql://` scheme — an older PostgreSQL-style URL may still be present in `backend/.env.example` from an earlier version and should be replaced or removed.
 
 ### 3. Frontend Setup
 
@@ -177,15 +209,17 @@ python agent.py
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | Required |
+| `DATABASE_URL` | MySQL async connection string (`mysql+aiomysql://user:pass@host:port/db`) | Required |
 | `SECRET_KEY` | JWT signing key | Required |
 | `ENCRYPTION_KEY` | Fernet key for biometric encryption | Required |
-| `FACE_MATCH_THRESHOLD` | Face similarity threshold (0-1) | 0.60 |
+| `FACE_MATCH_THRESHOLD` / `FACE_SIMILARITY_THRESHOLD` | Face similarity threshold (0-1) | 0.60 |
 | `FINGERPRINT_MATCH_THRESHOLD` | Fingerprint match score (0-100) | 70 |
 | `LIVENESS_THRESHOLD` | Anti-spoofing threshold | 0.70 |
-| `ATTENDANCE_COOLDOWN_MINUTES` | Min time between scans | 5 |
-| `WORKING_HOURS_START` | Earliest check-in time | 06:00 |
-| `WORKING_HOURS_END` | Latest check-out time | 22:00 |
+| `ATTENDANCE_COOLDOWN_MINUTES` / `COOLDOWN_MINUTES` | Min time between scans | 5 |
+| `WORKDAY_START_HOUR` / `WORKING_HOURS_START` | Earliest check-in hour | 06:00 |
+| `WORKDAY_END_HOUR` / `WORKING_HOURS_END` | Latest check-out hour | 22:00 |
+| `CORS_ORIGINS` | Allowed frontend origins | `["http://localhost:3000"]` |
+| `DEBUG` | Enables `/docs` and verbose SQL logging | `false` |
 
 ### Generate Encryption Key
 
@@ -233,8 +267,6 @@ print(Fernet.generate_key().decode())
 6. **No Raw Biometrics**: Only encrypted templates stored, never raw images
 
 ## 🗄️ Database Schema
-
-```
 ┌─────────────────┐     ┌─────────────────────┐
 │    employees    │     │  biometric_templates│
 ├─────────────────┤     ├─────────────────────┤
@@ -247,17 +279,16 @@ print(Fernet.generate_key().decode())
 │ status          │     └─────────────────────┘
 │ created_at      │
 └─────────────────┘     ┌─────────────────────┐
-        │               │   attendance_logs   │
-        │               ├─────────────────────┤
-        └──────────────►│ employee_id (FK)    │
-                        │ date                │
-                        │ check_in_time       │
-                        │ check_out_time      │
-                        │ check_in_method     │
-                        │ check_out_method    │
-                        │ confidence_scores   │
-                        └─────────────────────┘
-
+│   attendance_logs   │
+├─────────────────────┤
+┌───────►│ employee_id (FK)    │
+│        │ date                │
+│        │ check_in_time       │
+│        │ check_out_time      │
+│        │ check_in_method     │
+│        │ check_out_method    │
+│        │ confidence_scores   │
+│        └─────────────────────┘
 ┌─────────────────┐     ┌─────────────────────┐
 │    devices      │     │    admin_users      │
 ├─────────────────┤     ├─────────────────────┤
@@ -269,7 +300,6 @@ print(Fernet.generate_key().decode())
 │ is_active       │     │ is_active           │
 │ last_seen       │     │ last_login          │
 └─────────────────┘     └─────────────────────┘
-
 ┌─────────────────────┐
 │     audit_logs      │
 ├─────────────────────┤
@@ -283,19 +313,24 @@ print(Fernet.generate_key().decode())
 │ confidence_score    │
 │ created_at          │
 └─────────────────────┘
-```
 
 ## 🐳 Docker Deployment
 
 ```bash
-# Build and start all services
+# Build and start all services (MySQL, backend, frontend)
 docker-compose up -d
+
+# Start only the database
+docker-compose up -d db
 
 # View logs
 docker-compose logs -f
 
 # Stop services
 docker-compose down
+
+# Stop and remove volumes (⚠️ deletes all data)
+docker-compose down -v
 ```
 
 ## 📊 Admin Dashboard Features
@@ -360,9 +395,10 @@ After first run, an admin user is created:
 3. **Match failures**: Re-enroll employee with better quality template
 
 ### Backend Issues
-1. **Database connection**: Verify PostgreSQL is running, check credentials
+1. **Database connection**: Verify the MySQL container/service is running (`docker-compose ps`), check `DATABASE_URL` credentials and port (default Docker mapping is host `3307` → container `3306`)
 2. **Template decryption fails**: Ensure `ENCRYPTION_KEY` matches enrollment key
 3. **JWT errors**: Check `SECRET_KEY` configuration
+4. **`Fatal error in launcher` on pip/uvicorn**: Usually means the virtual environment was created in a different folder path and later moved/copied. Delete `.venv` and recreate it in the current project location: `python -m venv .venv`, then reinstall dependencies.
 
 ## 📄 License
 
