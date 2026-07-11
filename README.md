@@ -1,17 +1,24 @@
-# BioAttend — Biometric Attendance System
+# Biometric Attendance System (BioAttend)
 
 A production-ready dual-biometric (face + fingerprint) attendance system for office environments supporting 50-60 employees.
 
+**Created by:** [Dikshak Bobade](https://github.com/dikshakbobade) · [LinkedIn](https://www.linkedin.com/in/dikshakbobade)
+**License:** MIT — see [LICENSE](./LICENSE)
+
+---
+
 ## 🏗️ Architecture Overview
+
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                         OFFICE NETWORK                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐   │
-│  │ Face Agent   │    │ Fingerprint  │    │  Admin Dashboard │   │
-│  │ (Entry Gate) │    │    Agent     │    │    (React SPA)   │   │
-│  │              │    │ (Exit Gate)  │    │                  │   │
-│  └──────┬───────┘    └──────┬───────┘    └────────┬─────────┘   │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
+│  │ Face Agent   │    │ Fingerprint  │    │  Admin Dashboard │  │
+│  │ (Entry Gate) │    │    Agent     │    │    (React SPA)   │  │
+│  │              │    │ (Exit Gate)  │    │                  │  │
+│  └──────┬───────┘    └──────┬───────┘    └────────┬─────────┘  │
 │         │                   │                     │             │
 │         │ HTTPS/API Key     │ HTTPS/API Key       │ HTTPS/JWT   │
 │         │                   │                     │             │
@@ -28,34 +35,11 @@ A production-ready dual-biometric (face + fingerprint) attendance system for off
 │                    └─────────────────┘                          │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
-
-## 📸 Screenshots
-
-### Login
-![Login](docs/screenshots/login.png)
-
-### Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
-
-### Live Dashboard
-![Dashboard Live](docs/screenshots/dashboard-live.png)
-
-### Employees
-![Employees](docs/screenshots/employees.png)
-
-### Attendance Kiosk — Check In
-![Kiosk Check-in](docs/screenshots/kiosk-checkin.png)
-
-### Attendance Kiosk — Check Out
-![Kiosk Check-out](docs/screenshots/kiosk-checkout.png)
-
-## 🎥 Demo Video
-
-[▶️ Watch Demo Video](docs/Video/Demo.mp4)
-
-> Note: GitHub doesn't play `.mp4` inline via markdown — this link will download/open the file. For an inline-playable video, drag-drop the mp4 into a new GitHub Issue comment box (don't submit the issue), copy the generated `https://github.com/user-attachments/...` link, and swap it in above — it'll render as an inline player.
+```
 
 ## 📁 Project Structure
+
+```
 biometric-attendance-system/
 ├── backend/                    # FastAPI Backend Server
 │   ├── app/
@@ -85,9 +69,9 @@ biometric-attendance-system/
 │   ├── package.json
 │   └── vite.config.js
 ├── scripts/                    # Utility scripts
-├── docs/                       # Screenshots and demo video
 ├── docker-compose.yml
 └── README.md
+```
 
 ## 🚀 Quick Start
 
@@ -143,7 +127,7 @@ alembic upgrade head
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-> **Important:** The backend uses `aiomysql`/`PyMySQL` drivers (MySQL), not `asyncpg` (PostgreSQL). Make sure `backend/.env.example` and your `.env` both use the `mysql+aiomysql://` scheme — an older PostgreSQL-style URL may still be present in `backend/.env.example` from an earlier version and should be replaced or removed.
+> **Note:** The backend uses `aiomysql`/`PyMySQL` drivers (MySQL), not `asyncpg` (PostgreSQL). Make sure your `DATABASE_URL` uses the `mysql+aiomysql://` scheme.
 
 ### 3. Frontend Setup
 
@@ -221,6 +205,8 @@ python agent.py
 | `CORS_ORIGINS` | Allowed frontend origins | `["http://localhost:3000"]` |
 | `DEBUG` | Enables `/docs` and verbose SQL logging | `false` |
 
+> **Note:** `.env.example` in `backend/` currently shows a PostgreSQL-style URL — this is a leftover from an earlier version and does not match the actual MySQL drivers in `requirements.txt`. Use the MySQL format shown above instead.
+
 ### Generate Encryption Key
 
 ```python
@@ -267,6 +253,8 @@ print(Fernet.generate_key().decode())
 6. **No Raw Biometrics**: Only encrypted templates stored, never raw images
 
 ## 🗄️ Database Schema
+
+```
 ┌─────────────────┐     ┌─────────────────────┐
 │    employees    │     │  biometric_templates│
 ├─────────────────┤     ├─────────────────────┤
@@ -279,16 +267,17 @@ print(Fernet.generate_key().decode())
 │ status          │     └─────────────────────┘
 │ created_at      │
 └─────────────────┘     ┌─────────────────────┐
-│   attendance_logs   │
-├─────────────────────┤
-┌───────►│ employee_id (FK)    │
-│        │ date                │
-│        │ check_in_time       │
-│        │ check_out_time      │
-│        │ check_in_method     │
-│        │ check_out_method    │
-│        │ confidence_scores   │
-│        └─────────────────────┘
+        │               │   attendance_logs   │
+        │               ├─────────────────────┤
+        └──────────────►│ employee_id (FK)    │
+                        │ date                │
+                        │ check_in_time       │
+                        │ check_out_time      │
+                        │ check_in_method     │
+                        │ check_out_method    │
+                        │ confidence_scores   │
+                        └─────────────────────┘
+
 ┌─────────────────┐     ┌─────────────────────┐
 │    devices      │     │    admin_users      │
 ├─────────────────┤     ├─────────────────────┤
@@ -300,6 +289,7 @@ print(Fernet.generate_key().decode())
 │ is_active       │     │ is_active           │
 │ last_seen       │     │ last_login          │
 └─────────────────┘     └─────────────────────┘
+
 ┌─────────────────────┐
 │     audit_logs      │
 ├─────────────────────┤
@@ -313,6 +303,7 @@ print(Fernet.generate_key().decode())
 │ confidence_score    │
 │ created_at          │
 └─────────────────────┘
+```
 
 ## 🐳 Docker Deployment
 
@@ -402,7 +393,14 @@ After first run, an admin user is created:
 
 ## 📄 License
 
-MIT License - See LICENSE file for details.
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for full details.
+
+## 👤 Author
+
+**Dikshak Bobade**
+- GitHub: [@dikshakbobade](https://github.com/dikshakbobade)
+- LinkedIn: [linkedin.com/in/dikshakbobade](https://www.linkedin.com/in/dikshakbobade)
+- Email: bobadedikshak@gmail.com
 
 ## 👥 Support
 
