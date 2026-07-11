@@ -7,6 +7,25 @@ A production-ready dual-biometric (face + fingerprint) attendance system for off
 
 ---
 
+## 📸 Screenshots
+
+### Login
+![Login](docs/screenshots/login.png)
+
+### Dashboard
+![Dashboard](docs/screenshots/dashboard-live.png)
+
+### Employee Management
+![Employees](docs/screenshots/employees.png)
+
+### Kiosk Check-In
+![Kiosk Check-In](docs/screenshots/kiosk-checkin.png)
+
+### Kiosk Check-Out
+![Kiosk Check-Out](docs/screenshots/kiosk-checkout.png)
+
+---
+
 ## 🏗️ Architecture Overview
 
 ```
@@ -69,6 +88,8 @@ biometric-attendance-system/
 │   ├── package.json
 │   └── vite.config.js
 ├── scripts/                    # Utility scripts
+├── docs/                       # Documentation & screenshots
+│   └── screenshots/
 ├── docker-compose.yml
 └── README.md
 ```
